@@ -7,9 +7,10 @@ def generate_link(name, url):
     if not name or not url:
         raise ValueError("Name and URL are required.")
     try:
+        # Generate an ID
+        id = name.strip().lower().replace(" ", "")
+
         # Trim and lowercase the name and url
-        name = name.strip().replace(" ", "")
-        name = name.lower()
         url = url.strip().lower()
 
         # Get the current date and time
@@ -17,7 +18,7 @@ def generate_link(name, url):
 
         # Create the object with the specified keys
         obj = {
-            # "id": id,
+            "id": id,
             "name": name,
             "url": url,
             "dateGenerated": date_generated,

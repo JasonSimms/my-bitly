@@ -30,18 +30,16 @@ def add_link():
     data = request.get_json()
     link_name = data["name"]
     link_url = data["url"]
-    print("ive got the stuff i need, link_name: ", link_name, "  link_url: ", link_url)
 
     link_record = generate_link(link_name, link_url)
+    doc_id = link_record["id"]
 
     # if not isinstance(link_record, dict) or "name" not in link_record or "url" not in link_record:
     #     raise ValueError("Generated link is not a valid object with 'name' and 'url' keys")
 
     # Add the generated link to the database
-    write_result = create_record("links", link_record)
-    print(write_result)
-
-    return (link_record), 201
+    write_result = create_record_with_id("links", doc_id, link_record)
+    return (jsonify(write_result)), 201
 
 
 @bp.route("/recipients", methods=["GET"])
