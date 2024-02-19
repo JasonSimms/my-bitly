@@ -38,6 +38,15 @@ def find_document(collection, field, value):
     return document
 
 
+def find_document_by_id(collection, id):
+    doc = db.collection(collection).document(id).get()
+    if doc.exists:
+        return doc.to_dict()
+    else:
+        print("No such document!")
+        return {}
+
+
 def update_document(collection, doc_id, field, value):
     doc_ref = db.collection(collection).document(doc_id)
     doc_ref.update({field: value})
