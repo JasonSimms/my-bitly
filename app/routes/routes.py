@@ -1,8 +1,8 @@
 from flask import Flask, redirect, jsonify, request, Blueprint
 from flask_restful import Api, Resource
-from app.services.recipient_generator import generate_recipient
-from app.services.link_generator import generate_link
-from app.services.firestore_CRUD import (
+from app.services import (
+    generate_recipient,
+    generate_link,
     create_record,
     read_collection,
     create_record_with_id,
@@ -11,12 +11,6 @@ from app.services.firestore_CRUD import (
 
 
 bp = Blueprint("links", __name__)
-
-# @bp.route('/links')
-# def get_links():
-#     # Your code here
-#     return('bingo')
-#     pass
 
 
 @bp.route("/", methods=["GET"])
