@@ -1,8 +1,14 @@
 # Initialize the Firebase Admin SDK
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
+from dotenv import load_dotenv
+import json
 
-cred = credentials.Certificate("./fireBase_credentials.json")
+load_dotenv()
+
+FIREBASE_SECRET = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
+cred = credentials.Certificate(FIREBASE_SECRET)
 firebase_admin.initialize_app(cred)
 
 # Define the Firestore client

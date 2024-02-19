@@ -48,6 +48,25 @@ def get_recipients():
     return (data), 200
 
 
+@bp.route("/foo", methods=["GET"])
+def do_foo():
+    recipients = read_collection("recipients")
+    recipient_ids = [recipient["id"] for recipient in recipients]
+    links = read_collection("links")
+    links = [link["id"] for link in links]
+
+    recipient_links = []
+    for x in recipient_ids:
+        obj = {"recipient": x}
+        for y in links:
+            print("link", x, y)
+            obj[y] = x + "/" + y
+            # recipient_links.append(x+'/'+y)
+        recipient_links.append(obj)
+
+    return (jsonify(recipient_links)), 200
+
+
 @bp.route("/new_recipient", methods=["POST"])
 def add_recipient():
     # Access the JSON body of the POST request
