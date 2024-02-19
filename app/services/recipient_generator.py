@@ -1,12 +1,11 @@
 # link_generator.py
 import datetime
 import socket
-import uuid
 
 
 def generate_recipient(name):
     # Generate an ID
-    id = str(uuid.uuid4())
+    id = name.strip().lower().replace(" ", "")
 
     # Get the current date and time
     date_generated = datetime.datetime.now().isoformat()
@@ -23,7 +22,7 @@ def generate_recipient(name):
 
     # Create the object with the specified keys
     obj = {
-        # "id": id,
+        "id": id,
         "name": name,
         "dateGenerated": date_generated,
         "datesClicked": dates_clicked,

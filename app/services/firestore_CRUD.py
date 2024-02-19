@@ -18,6 +18,7 @@ def create_record(collection_name, data):
 def create_record_with_id(collection_name, doc_id, data):
     doc_ref = db.collection(collection_name).document(doc_id)
     doc_ref.set(data)
+    print("createdwithid", doc_ref.id)
     return doc_ref.id
 
 

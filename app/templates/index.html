@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My-Bitly Admin Panel</title>
+</head>
+<body>
+    <h1>My-bitly Admin panel</h1>
+
+    <!-- Submission form for every post route -->
+    <form id="new_link_form" onsubmit="submitForm('new_link')">
+        <h2>Create link '/new_link'</h2>
+        <input type="text" name="name" placeholder="Link Name">
+        <input type="text" name="url" placeholder="URL">
+        <input type="submit" value="Submit">
+    </form>
+
+    <form id="new_recipient_form" onsubmit="submitForm('new_recipient')">
+        <h2>Create Recipient '/new_recipient'</h2>
+        <input type="text" name="name" placeholder="Recipient Name">
+        <input type="submit" value="Submit">
+    </form>
+
+   
+
+
+    <!-- Links for every get route -->
+    <h2>GET ROUTES</h2>
+    <ul>
+        <li><a href="/">/home</a></li>
+        <li><a href="/links">Get Links</a></li>
+        <li><a href="/recipients">Get Recipients</a></li>
+    </ul>
+
+    <script>
+        function submitForm(formId) {
+            event.preventDefault(); // Prevents the default form submission
+            console.log('submitting form', formId);
+            var form = document.getElementById(formId+"_form");
+            var formData = new FormData(form);
+            const payload = {};
+             // Retrieve keys and values of FormData
+            for (var pair of formData.entries()) {
+                var key = pair[0];
+                var value = pair[1];
+                payload[key] = value;
+            }
+            console.log('Payload:', payload);
+
+            // Send a POST request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/'+formId, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200 || xhr.status === 201) {
+                    // console.log('Server response:', xhr.responseText);
+                    var data = JSON.parse(xhr.responseText);
+                    console.log('Server data:', data);
+                } else if (xhr.readyState === 4) {
+                    console.error('Server error:', xhr.status);
+                }
+            };
+            xhr.send(JSON.stringify(payload));
+            
+        }
+    </script>
+</body>
+</html>
