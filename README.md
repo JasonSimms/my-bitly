@@ -1,21 +1,19 @@
 # My Bitly Clone
 
-My Bitly Clone is a RESTful API application that generates short URL links with trackers. It is built using Python and Flask, and it is designed to be deployed on Vercel.
+My Bitly Clone is a RESTful API application that generates short URL links with trackers. It is built using Python and Flask, it will offer a redirect service to intercept traffic on the way to github or my resume.
 
 ## Features
 
-- Generate short URLs for any given URL.
-- Track the number of clicks on each short URL.
-- Provide a RESTful interface for easy integration with other services.
+[x]- Generate short URLs for any given URL.
+[ ]- Generate general tracker for a list of URLS.
+[ ]- Redirect traffic onto the URLs
+[ ]- Track the number of clicks on each short URL.
+[ ]- Provide a RESTful interface for easy integration with other services.
 
 ## Deployment
 
-To deploy this application on Vercel, follow these steps:
-
-1. Install Vercel CLI: `npm install -g vercel`
-2. Clone this repository: `git clone https://github.com/yourusername/my-bitly-clone.git`
-3. Navigate to the project directory: `cd my-bitly-clone`
-4. Deploy the application: `vercel`
+[x]- Connect to firestore
+[ ]- Deploy as API
 
 ## Usage
 

@@ -1,18 +1,9 @@
 # app.py
 from flask import Flask, redirect, jsonify, request
 from flask_restful import Api, Resource
+from recipient_generator import generate_recipient
 from link_generator import generate_link
-
-
-# Initialize the Firebase Admin SDK
-import firebase_admin
-from firebase_admin import credentials, firestore
-
-cred = credentials.Certificate("./fireBase_credentials.json")
-firebase_admin.initialize_app(cred)
-
-# Define the Firestore client
-db = firestore.client()
+from firestore_CRUD import create_record, read_collection, create_record_with_id
 
 print("lets gooooo")
 app = Flask(__name__)
@@ -25,24 +16,40 @@ def home():
 
 
 @app.route("/links", methods=["GET"])
-def get_data():
-    docs = db.collection("links").get()
-    data = [doc.to_dict() for doc in docs]
-    return jsonify(data), 200
+def get_links():
+    data = read_collection("links")
+    return (data), 200
 
 
 @app.route("/new_link", methods=["POST"])
 def add_link():
-    print("add link")
     # Access the JSON body of the POST request
     data = request.get_json()
-    generated_link = generate_link(data["name"])
+    link_record = generate_link(data["name"], data["url"])
 
-    doc_ref = db.collection("links").document()
-    write_result = doc_ref.set(generated_link)
+    # Add the generated link to the database
+    write_result = create_record("links", link_record)
     print(write_result)
 
-    return (generated_link), 200
+    return (link_record), 201
+
+
+@app.route("/recipients", methods=["GET"])
+def get_recipients():
+    data = read_collection("recipients")
+    return (data), 200
+
+
+@app.route("/new_recipient", methods=["POST"])
+def add_recipient():
+    # Access the JSON body of the POST request
+    data = request.get_json()
+    recipient = generate_recipient(data["name"])
+    doc_id = recipient["name"].strip().lower()
+
+    # Add the generated link to the database
+    write_result = create_record_with_id("recipients", "blaaa", doc_id)
+    return (write_result), 201
 
 
 @app.route("/", defaults={"path": ""})
