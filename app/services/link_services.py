@@ -52,3 +52,18 @@ def generate_click_record(
         print("error raised in except", e)
         return ()
         # raise ValueError("Invalid input: {}".format(e))
+
+
+def generate_deliverable_links(
+    recipient_ids, link_ids, base_url="http://localhost:5000/mylink"
+):
+    recipient_links = []
+    for x in recipient_ids:
+        obj = {"recipient": x}
+        for y in link_ids:
+            print("link", x, y)
+            obj[y] = base_url + "mylink/" + y + "?id=" + x
+            # recipient_links.append(x+'/'+y)
+        recipient_links.append(obj)
+
+    return recipient_links

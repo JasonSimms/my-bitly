@@ -1,5 +1,6 @@
 from flask import Flask, redirect, jsonify, request, Blueprint, render_template
 from flask_restful import Api, Resource
+import logging
 from app.services import (
     generate_recipient,
     generate_link,
@@ -10,6 +11,7 @@ from app.services import (
     find_document,
     generate_click_record,
     update_link_clicks,
+    generate_deliverable_links,
 )
 
 
@@ -51,21 +53,17 @@ def get_recipients():
     return (data), 200
 
 
-@bp.route("/foo", methods=["GET"])
-def do_foo():
+@bp.route("/deliverablelinks", methods=["GET"])
+def get_deliverable_links():
+    # read the recipients and links
     recipients = read_collection("recipients")
     recipient_ids = [recipient["id"] for recipient in recipients]
     links = read_collection("links")
     links = [link["id"] for link in links]
 
-    recipient_links = []
-    for x in recipient_ids:
-        obj = {"recipient": x}
-        for y in links:
-            print("link", x, y)
-            obj[y] = x + "/" + y
-            # recipient_links.append(x+'/'+y)
-        recipient_links.append(obj)
+    # generate the deliverable links
+    base_url = request.url_root
+    recipient_links = generate_deliverable_links(recipient_ids, links, base_url)
 
     return (jsonify(recipient_links)), 200
 
@@ -88,18 +86,37 @@ def redirect_link(link_name):
     tracker_id = request.args.get("id", default=None, type=str)
 
     # look up the link
-    myDoc = find_document_by_id("links", link_name)  # TODO handle if not found
-    print("did i find my doc?", myDoc)
+    myDoc = find_document_by_id("links", link_name)
+    if not myDoc:
+        message = (
+            "Link not found link_name: " + link_name + " tracker_id: " + tracker_id
+        )
+        logging.error(message, exc_info=True)
+        return redirect("https://github.com/JasonSimms", code=302)
 
     # log the click:
     click_record = generate_click_record(tracker_id)
-
     update_result = update_link_clicks(myDoc["id"], click_record)
     print(update_result)
 
     # redirect to the link
     target = myDoc["url"]
+    if not target:
+        message = (
+            "Link not found  myDoc[url]: "
+            + jsonify(myDoc)
+            + " tracker_id: "
+            + tracker_id
+        )
+        logging.error(message, exc_info=True)
+        return redirect("https://github.com/JasonSimms", code=302)
     return redirect(target, code=302)
+
+
+@bp.route("/debug", methods=["GET"])
+def debug():
+    base_url = request.url_root
+    return jsonify("base_url: " + base_url)
 
 
 @bp.route("/", defaults={"path": ""})
