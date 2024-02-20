@@ -7,6 +7,9 @@ from app.services import (
     read_collection,
     create_record_with_id,
     find_document_by_id,
+    find_document,
+    generate_click_record,
+    update_link_clicks,
 )
 
 
@@ -80,14 +83,23 @@ def add_recipient():
     return (jsonify(write_result)), 201
 
 
-@bp.route("/mylink/<string:link_name>/<string:recipient>", methods=["GET"])
-def redirect_link(link_name, recipient):
-    # obj = { "link_name": link_name, "recipient": recipient }
-    # return(obj)
+@bp.route("/mylink/<string:link_name>", methods=["GET"])
+def redirect_link(link_name):
+    tracker_id = request.args.get("id", default=None, type=str)
+
     # look up the link
-    myDoc = find_document_by_id("links", link_name)
-    return myDoc
-    # return redirect("https://github.com/JasonSimms", code=302)
+    myDoc = find_document_by_id("links", link_name)  # TODO handle if not found
+    print("did i find my doc?", myDoc)
+
+    # log the click:
+    click_record = generate_click_record(tracker_id)
+
+    update_result = update_link_clicks(myDoc["id"], click_record)
+    print(update_result)
+
+    # redirect to the link
+    target = myDoc["url"]
+    return redirect(target, code=302)
 
 
 @bp.route("/", defaults={"path": ""})

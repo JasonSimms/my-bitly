@@ -31,3 +31,24 @@ def generate_link(name, url):
         print("error raised in except", e)
         return ()
         # raise ValueError("Invalid input: {}".format(e))
+
+
+def generate_click_record(
+    recipient_id="none",
+):  # TODO can i get more info from the request here?
+    try:
+        # Get the current date and time
+        date_clicked = datetime.datetime.now().isoformat()
+
+        # Create the object with the specified keys
+        obj = {
+            "recipientId": recipient_id,
+            "date_clicked": date_clicked,
+        }
+
+        return obj
+    except (AttributeError, TypeError) as e:
+        # Handle missing or wrong type variables
+        print("error raised in except", e)
+        return ()
+        # raise ValueError("Invalid input: {}".format(e))

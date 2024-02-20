@@ -63,3 +63,9 @@ def update_document(collection, doc_id, field, value):
 def delete_document(collection, doc_id):
     db.collection(collection).document(doc_id).delete()
     return doc_id
+
+
+def update_link_clicks(doc_id, click_record):
+    doc_ref = db.collection("links").document(doc_id)
+    doc_ref.update({"clicks": firestore.ArrayUnion([click_record])})
+    return doc_ref.id
