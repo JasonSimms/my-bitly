@@ -1,5 +1,4 @@
 from flask import Flask, redirect, jsonify, request, Blueprint, render_template
-from flask_restful import Api, Resource
 import logging
 from functools import wraps
 from app.services import (

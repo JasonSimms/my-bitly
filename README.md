@@ -17,7 +17,7 @@ My Bitly Clone is a RESTful API application that generates short URL links with 
 
 - [x] Connect to firestore
 - [x] Code API logic
-- [ ] Secure
+- [x] Secure
 - [ ] Add unittesting
 - [ ] Deploy as API
 - [ ] Deploy Front End
