@@ -5,6 +5,8 @@
 </head>
 <body>
     <h1>My-bitly Admin panel</h1>
+    <h2>Create link '/new_link'</h2>
+    <input id="api_key_input" type="text" name="key" placeholder="API_KEY">
 
     <!-- Submission form for every post route -->
     <form id="new_link_form" onsubmit="submitForm('new_link')">
@@ -31,13 +33,19 @@
         <li><a href="/links">Get Links</a></li>
         <li><a href="/recipients">Get Recipients</a></li>
         <li><a href="/deliverablelinks">Get Deliverables</a></li>
+        <li><a href="#" onclick="debug()">debug2</a></li>
+
 
     </ul>
 
     <script>
         function submitForm(formId) {
             event.preventDefault(); // Prevents the default form submission
+            
+            var apiKeyInput = document.getElementById("api_key_input");  //get the api key for post methods
+            var apiKeyValue = apiKeyInput.value;
             console.log('submitting form', formId);
+            
             var form = document.getElementById(formId+"_form");
             var formData = new FormData(form);
             const payload = {};
@@ -53,6 +61,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/'+formId, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('key', apiKeyValue);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200 || xhr.status === 201) {
                     // console.log('Server response:', xhr.responseText);
@@ -63,6 +72,29 @@
                 }
             };
             xhr.send(JSON.stringify(payload));
+            
+        }
+    </script>
+    <script>
+        function debug() {
+            event.preventDefault(); // Prevents the default form submission
+            console.log("make a get call");
+           
+            // Send a POST request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/debug', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('key', '1234');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200 || xhr.status === 201 || xhr.status == 403) {
+                    // console.log('Server response:', xhr.responseText);
+                    var data = JSON.parse(xhr.responseText);
+                    console.log('Server data:', data);
+                } else if (xhr.readyState === 4) {
+                    console.error('Server error:', xhr.status);
+                }
+            };
+            xhr.send();
             
         }
     </script>

@@ -1,6 +1,7 @@
 from flask import Flask, redirect, jsonify, request, Blueprint, render_template
 from flask_restful import Api, Resource
 import logging
+from functools import wraps
 from app.services import (
     generate_recipient,
     generate_link,
@@ -12,6 +13,7 @@ from app.services import (
     generate_click_record,
     update_link_clicks,
     generate_deliverable_links,
+    require_api_key,
 )
 
 
@@ -30,6 +32,7 @@ def get_links():
 
 
 @bp.route("/new_link", methods=["POST"])
+@require_api_key
 def add_link():
     # Access the JSON body of the POST request
     data = request.get_json()
@@ -69,6 +72,7 @@ def get_deliverable_links():
 
 
 @bp.route("/new_recipient", methods=["POST"])
+@require_api_key
 def add_recipient():
     # Access the JSON body of the POST request
     data = request.get_json()
@@ -114,6 +118,7 @@ def redirect_link(link_name):
 
 
 @bp.route("/debug", methods=["GET"])
+@require_api_key
 def debug():
     base_url = request.url_root
     return jsonify("base_url: " + base_url)
