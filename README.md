@@ -24,7 +24,18 @@ My Bitly Clone is a RESTful API application that generates short URL links with 
 
 ## Usage
 
-NOT READY
+clone repository
+
+create .env with FIREBASE_CREDENTIALS =  & API_KEY = 
+
+pip install -r requirements.txt
+
+python run.py
+
+
+| Header | Description  -------------------------|
+| :----- | :------------------------------------ |
+| `Key`  | **Required ApiKey in all POST methods |
 
 
 ### Generate a Short URL
