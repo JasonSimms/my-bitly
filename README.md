@@ -1,6 +1,6 @@
-# My Bitly Clone
+# My Bitly API [PythonAnywhereDeployment](https://simmsthecoder.pythonanywhere.com/)
 
-My Bitly Clone is a RESTful API application that generates short URL links with trackers. It is built using Python and Flask, it will offer a redirect service to intercept traffic on the way to github or my resume.
+My Bitly is a RESTful API application that generates short URL links with trackers. It is built using Python and Flask, it will offer a redirect service to intercept traffic on the way to github or my resume.
 
 ## Features
 
@@ -18,8 +18,8 @@ My Bitly Clone is a RESTful API application that generates short URL links with 
 - [x] Connect to firestore
 - [x] Code API logic
 - [x] Secure
+- [x] Deploy as API [PythonAnywhere](https://simmsthecoder.pythonanywhere.com/)
 - [ ] Add unittesting
-- [ ] Deploy as API
 - [ ] Deploy Front End
 
 ## Usage
