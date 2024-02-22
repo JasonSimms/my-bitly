@@ -19,6 +19,9 @@ My Bitly is a RESTful API application that generates short URL links with tracke
 - [x] Code API logic
 - [x] Secure
 - [x] Deploy as API [PythonAnywhere](https://simmsthecoder.pythonanywhere.com/)
+- [ ] Support Multiple Users
+- [ ] Attach Telegram Bot
+- [ ] Attach Temail Generator
 - [ ] Add unittesting
 - [ ] Deploy Front End
 
