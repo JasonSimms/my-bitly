@@ -60,7 +60,7 @@ def update_document(collection, doc_id, field, value):
     return doc_ref.id
 
 
-def delete_document(collection, doc_id):
+def delete_document_by_id(collection, doc_id):
     db.collection(collection).document(doc_id).delete()
     return doc_id
 

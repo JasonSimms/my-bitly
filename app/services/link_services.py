@@ -1,36 +1,45 @@
 # link_generator.py
+# from ..models import UserLink
 import datetime
 
 
-def generate_link(name, url):
-    print("im here", "name: ", name, "  url: ", url)
+    
+############################ Deprecated? ############################
+def generate_user_link(name, url, creator):
     if not name or not url:
         raise ValueError("Name and URL are required.")
     try:
         # Generate an ID
-        id = name.strip().lower().replace(" ", "")
-
-        # Trim and lowercase the name and url
-        url = url.strip().lower()
-
-        # Get the current date and time
-        date_generated = datetime.datetime.now().isoformat()
-
-        # Create the object with the specified keys
-        obj = {
+        id = f"link_{datetime.datetime.now().isoformat()}"
+        
+        # created_at = datetime.datetime.now().isoformat()
+        # updated_at = datetime.datetime.now().isoformat()
+        
+        user_link = {
             "id": id,
-            "name": name,
             "url": url,
-            "dateGenerated": date_generated,
-            "clicks": [],
+            "nickname": name,
+            "creator": creator,
+            # "createdAt": created_at,
+            # "updatedAt": updated_at
         }
 
-        return obj
+        #   # Create a new UserLink object with the provided url and nickname, and default values for id, createdAt, and updatedAt.
+        # user_link = UserLink(
+        #     id=id,
+        #     url=url,
+        #     nickname=name,
+        #     createdAt=created_at,
+        #     updatedAt=updated_at
+        # )
+
+        return user_link
     except (AttributeError, TypeError) as e:
         # Handle missing or wrong type variables
         print("error raised in except", e)
         return ()
         # raise ValueError("Invalid input: {}".format(e))
+    
 
 
 def generate_click_record(

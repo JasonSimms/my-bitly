@@ -10,8 +10,7 @@ My Bitly is a RESTful API application that generates short URL links with tracke
 - Redirect traffic to the destination and log the activity
 - BONUS ROUND 1 - Generate an admin front End
 - BONUS ROUND 2 -- Generate PDF's dynamically providing the URL's
-- BONUS ROUND 3 --- Generate Emails dynamically with URLs 
-
+- BONUS ROUND 3 --- Generate Emails dynamically with URLs
 
 ## Steps
 
@@ -19,9 +18,15 @@ My Bitly is a RESTful API application that generates short URL links with tracke
 - [x] Code API logic
 - [x] Secure
 - [x] Deploy as API [PythonAnywhere](https://simmsthecoder.pythonanywhere.com/)
-- [ ] Support Multiple Users
+- Implement new Data Flow Routes
+  - [x] User CRUD
+  - [x] UserLink CRUD
+  - [ ] CampaignLink CRUD
+  - [ ] Click CRUD
+  - [ ] Campaign CRUD
+- [ ] Fix Auth with front End Firebase
 - [ ] Attach Telegram Bot
-- [ ] Attach Temail Generator
+- [ ] Attach email Generator
 - [ ] Add unittesting
 - [ ] Deploy Front End
 
@@ -29,17 +34,15 @@ My Bitly is a RESTful API application that generates short URL links with tracke
 
 clone repository
 
-create .env with FIREBASE_CREDENTIALS =  & API_KEY = 
+create .env with FIREBASE_CREDENTIALS = & API_KEY =
 
 pip install -r requirements.txt
 
 python run.py
 
-
-| Header | Description  -------------------------|
-| :----- | :------------------------------------ |
-| `Key`  | **Required ApiKey in all POST methods |
-
+| Header | Description -------------------------   |
+| :----- | :-------------------------------------- |
+| `Key`  | \*\*Required ApiKey in all POST methods |
 
 ### Generate a Short URL
 
