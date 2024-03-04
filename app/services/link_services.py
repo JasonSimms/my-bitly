@@ -3,7 +3,6 @@
 import datetime
 
 
-    
 ############################ Deprecated? ############################
 def generate_user_link(name, url, creator):
     if not name or not url:
@@ -11,10 +10,10 @@ def generate_user_link(name, url, creator):
     try:
         # Generate an ID
         id = f"link_{datetime.datetime.now().isoformat()}"
-        
+
         # created_at = datetime.datetime.now().isoformat()
         # updated_at = datetime.datetime.now().isoformat()
-        
+
         user_link = {
             "id": id,
             "url": url,
@@ -39,7 +38,6 @@ def generate_user_link(name, url, creator):
         print("error raised in except", e)
         return ()
         # raise ValueError("Invalid input: {}".format(e))
-    
 
 
 def generate_click_record(

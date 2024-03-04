@@ -1,11 +1,12 @@
 def check_keys(obj, required_keys):
     try:
         for key in required_keys:
-            _ = obj[key] # Attempt to access the key
+            _ = obj[key]  # Attempt to access the key
     except KeyError as e:
         print(f"Missing key: {e}")
         return False
     return True
+
 
 # # Example usage
 # my_dict = {"name": "John", "age": 30}
@@ -26,7 +27,7 @@ def check_keys(obj, required_keys):
 #     @abstractmethod
 #     def method2(self, arg1):
 #         pass
-    
+
 # class MyClass(MyInterface):
 #     def method1(self):
 #         print("Implementing method1")
@@ -41,5 +42,5 @@ def check_keys(obj, required_keys):
 #     my_instance.method2("Hello")
 # except Exception as e:
 #     print(e)
-    
+
 # exit(1)

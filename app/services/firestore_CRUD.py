@@ -1,18 +1,43 @@
 # Initialize the Firebase Admin SDK
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, auth
 import os
 from dotenv import load_dotenv
 import json
+import logging
 
 load_dotenv()
 
-FIREBASE_SECRET = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
-cred = credentials.Certificate(FIREBASE_SECRET)
-firebase_admin.initialize_app(cred)
+
+# Initialize the Firebase Admin SDK
+try:
+    FIREBASE_SECRET = json.loads(os.getenv("LINK_REACH_SERVICE_ACCOUNT"))
+    cred = credentials.Certificate(FIREBASE_SECRET)
+    firebase_admin.initialize_app(cred)
+    logging.info("Firebase Admin SDK initialized successfully.")
+except Exception as e:
+    logging.error("Failed to initialize Firebase Admin SDK: %s", e)
+    raise e
 
 # Define the Firestore client
 db = firestore.client()
+
+
+# Now you can use the Firebase Admin SDK to interact with Firebase Authentication
+# For example, to list all users:
+def list_all_users():
+    try:
+        # Start listing users from the beginning, 1000 at a time.
+        page = auth.list_users()
+        print("page:", page)
+        while page:
+            for user in page.users:
+                print("User: " + user.email)
+            # Get next batch of users.
+            page = page.get_next_page()
+    except Exception as e:
+        logging.error("Error listing users: %s", e)
+        raise e
 
 
 def create_record(collection_name, data):
